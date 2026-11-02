@@ -20,14 +20,31 @@ before dawn. (It began as *Escape the Convent*; the folder keeps that name.)
 | **Esc** | Settings: volume, music, brightness, mouse speed, arrow-key turning, gentle mode, bigger text, full screen |
 
 **Joining:** type your name, pick a costume (wizard, witch, pirates, ninja, viking, knight, cowgirl, chef or
-doctor; it turns slowly in the lantern light so you see it) and a colour for its clothes, and press
-**Enter the manor**. That is how the others see you in the house.
+doctor; it turns slowly in the lantern light so you see it) and a colour for its clothes. Then press
+**The lobby** to join the group game (shown while a big screen is open or people are inside), or **Play on my
+own** for a private game of one that you start yourself, with Easy, Normal or Scary and no big screen needed.
+That is how the others see you in the house. While you wait, the lobby loads the house and shows the controls
+and rules on two pages.
+
+**The night:** it lasts 12 minutes (`DURATION.night` in `shared/config.js`). When the host opens the house, a
+short story card (*The Masquerade at Blackwood Manor*, in `shared/story.js`) is shown on every screen. Everyone
+starts in a different room, away from the monsters' rooms; after a catch you wake in the guest bedrooms. The
+monsters keep still for the first 40 seconds.
 
 **The goal, as a team:**
 1. Find the **fuse** (hidden in a drawer, cupboard or box somewhere) and put it in the **fuse box** in the gallery. The gallery lights come on, and something wakes up in the laboratory.
 2. Find the **brass key** and open **the Count's desk** in his study. The note inside says which three rooms hold the iron keys.
 3. Bring the **three iron keys** to the **front door**, one padlock each.
 4. The door opens and every monster comes for you. You have two minutes to get out.
+
+**The pumpkin patch:** at dawn the top scorer (ties: escaped first, then fewer catches, then the earlier
+escape) walks into the graveyard, where six identical carved pumpkins hang from a wooden frame. They pick
+one; it bursts into a number from 1 to 6, and the **6 is the prize**, so it is a one-in-six chance. The
+server deals the numbers 1 to 6 into the pumpkins at the moment of the pick with `crypto.randomInt` (a
+Fisher-Yates shuffle in `Game.pickPumpkin` in `src/game.js`), and the browser cannot change them. Every pick
+is written to the server log as a `[harvest]` line (winner, pick, number, all six numbers, time). The big
+screen shows the same reveal. There is no time limit, and solo games never get a prize. The prize text is
+`PRIZE.text` in `shared/config.js`; untick "Pumpkin prize at dawn" on the host screen to play without it.
 
 **How to win** (the lobby and the map card say the same): when chased, run with Shift, then hide in a
 wardrobe, under a bed or behind a curtain; when cornered, flash with Q; follow the clue messages and the
@@ -56,7 +73,7 @@ of the screen and on the map; each sweet is worth 2 points at dawn, and whoever 
 *Sweet tooth* award. The big screen shows them as small pink dots.
 
 **Help finding things:** when you walk into a room, a short line says how many hiding places are left to search there ("2 places left to search in the Kitchen.", or "Everything in the Kitchen has been searched."); it only speaks up when that has changed since you were last there. The map shows the same under each room's name. Every emptied hiding place gets a tick on everyone's map, and if nobody has found
-the fuse (or the brass key) for 3 minutes, a clue says which room it is in.
+the fuse (or the brass key) for 2 minutes, a clue says which room it is in.
 
 **Trying it out:** join with the name **tester** and you never run out of lives, and your map shows where
 the fuse and keys are hidden (the big screen still shows your catches). This only works on a test server: on Cloud Run (`NODE_ENV=production`) it is off
